@@ -1,6 +1,8 @@
 import json
 from websocket_server import WebsocketServer
+import blinkt
 
+blinkt.set_clear_on_exit()
 
 def new_client(client, server):
     print("Hey all, a new client has joined us")
@@ -10,7 +12,11 @@ def new_client(client, server):
 def message_received(client, server, message):
     if len(message) > 200:
         message = message[:200]+'..'
-    data = json.loads(message)
+        data = json.loads(message)
+        data['Euler']['y']
+        clear()
+        set_pixel(i, 255, 0, 0)
+        show()
 
 
 # Called for every client disconnecting
