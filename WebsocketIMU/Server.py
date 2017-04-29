@@ -1,10 +1,7 @@
 import json
 from websocket_server import WebsocketServer
 
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/test
 def new_client(client, server):
     print("Hey all, a new client has joined us")
     # start of EPOCH time
