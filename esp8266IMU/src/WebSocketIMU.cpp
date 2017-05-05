@@ -31,10 +31,8 @@ const char *_server = "192.168.0.102";
 */
 const char *_ssid = "W1F1";
 const char *_password = "B3NR1CHJ0RD4N14N";
-const char *_server = "192.168.0.21";
-
+const char *_server = "192.168.0.27";
 uint16_t _port = 81;
-String data;
 
 WiFiClient espClient;
 WebSocketsClient webSocket;
@@ -69,15 +67,23 @@ void ABS_IMU(void) {
   // get Quaternion
   sensors_event_t event;
   bno.getEvent(&event);
+  float qx  = event.orientation.x;
   float qy = event.orientation.y;
-  char buf[10];
-  dtostrf(qy, 5, 2, buf);
-  data = "{\"Euler\":{";
-  data += "\"y\":";
-  data += buf;
+  float qz = event.orientation.z;
+  char buf[3][10];
+  String data;
+  dtostrf(qx, 4, 2, buf[0]);
+  dtostrf(qy, 4, 2, buf[1]);
+  dtostrf(qz, 4, 2, buf[2]);
+  data = "{\"x\":";
+  data += buf[0];
+  data += ",\"y\":";
+  data += buf[1];
+  data += ",\"z\":";
+  data += buf[2];
   data += "}";
   webSocket.sendTXT(data);
-  Serial.println("sent..");
+  Serial.println(data);
 }
 
 /*
